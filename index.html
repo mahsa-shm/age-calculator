@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Age Calculator</title>
+    <style>
+      * {
+        margin: 0;
+        box-sizing: border-box;
+      }
+      body {
+        background-color: khaki;
+        text-align: center;
+      }
+      h1,
+      h3,
+      form {
+        padding-top: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Age Calculator</h1>
+    <h3 id="result"></h3>
+
+    <input type="date" id="input-date" placeholder="yyyy-mm-dd" />
+    <button id="button" onclick="ageCalculator()">calculate</button>
+
+    <script>
+      const daysOfMonths = [
+        "31",
+        "28",
+        "31",
+        "30",
+        "31",
+        "30",
+        "31",
+        "31",
+        "30",
+        "31",
+        "30",
+        "31",
+      ];
+
+      function ageCalculator() {
+        31;
+        const inputInfo = document.getElementById("input-date").value;
+
+        if (!inputInfo || inputInfo == "") {
+          document.getElementById(
+            "result"
+          ).innerHTML = `please enter your birthDay`;
+        } else {
+          const currDay = new Date();
+          const birthDay = new Date(inputInfo);
+
+          const year = () => {
+            if (birthDay.getMonth() > currDay.getMonth()) {
+              return currDay.getFullYear() - birthDay.getFullYear() - 1;
+            } else {
+              return currDay.getFullYear() - birthDay.getFullYear();
+            }
+          };
+
+          const month = () => {
+            if (
+              birthDay.getMonth() > currDay.getMonth() &&
+              birthDay.getDate() > currDay.getDate()
+            ) {
+              return 11 - (birthDay.getMonth() - currDay.getMonth());
+            } else if (
+              birthDay.getMonth() > currDay.getMonth() &&
+              birthDay.getDate() < currDay.getDate()
+            ) {
+              return 12 - (birthDay.getMonth() - currDay.getMonth());
+            } else if (
+              birthDay.getMonth() < currDay.getMonth() &&
+              birthDay.getDate() > currDay.getDate()
+            ) {
+              return currDay.getMonth() - birthDay.getMonth() - 1;
+            }
+            return currDay.getMonth() - birthDay.getMonth();
+          };
+
+          const day = () => {
+            if (birthDay.getDate() > currDay.getDate()) {
+              for (let i = 0; i < daysOfMonths.length; i++) {
+                if ((i = currDay.getMonth())) {
+                  return (
+                    daysOfMonths[i - 1] -
+                    (birthDay.getDate() - currDay.getDate())
+                  );
+                }
+              }
+            }
+            return currDay.getDate() - birthDay.getDate();
+          };
+
+          document.getElementById(
+            "result"
+          ).innerHTML = `year : ${year()}  |  month : ${month()}  |  day: ${day()}`;
+        }
+      }
+      // enter is equal to clicking button
+      document
+        .getElementById("input-date")
+        .addEventListener("keydown", function (e) {
+          if (e.keyCode === 13) {
+            document.getElementById("button").click();
+          }
+        });
+    </script>
+  </body>
+</html>
